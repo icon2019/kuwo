@@ -5,6 +5,7 @@ import com.huanxi.music.nosql.ICache;
 import lombok.extern.log4j.Log4j2;
 import okhttp3.OkHttpClient;
 import okhttp3.Response;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
 
@@ -26,7 +27,7 @@ public class Parser {
     @Resource
     OkHttp3Request okHttp3Request;
 
-    @PostConstruct
+    @Scheduled(fixedRate=1000*60*10)
     public void init() {
         Response res = okHttp3Request.get("http://www.kuwo.cn");
         res.close();

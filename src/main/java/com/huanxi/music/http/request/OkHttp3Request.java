@@ -19,6 +19,7 @@ public class OkHttp3Request {
     OkHttpClient httpClient;
     @Resource
     ICache cache;
+
     public Response get(String url) {
         log.info("get:" + url);
         String kwToken = cache.get("kwToken");
@@ -28,11 +29,13 @@ public class OkHttp3Request {
         Request request = new Request.Builder()
                 .url(url)
                 .addHeader("csrf", kwToken)
-                .addHeader("Referer","http://www.kuwo.cn")
+                .addHeader("Referer", "http://www.kuwo.cn")
                 .build();
         try {
             final Call call = httpClient.newCall(request);
-            return call.execute();
+            Response response = call.execute();
+            log.info("res:" + request.body().toString());
+            return response;
         } catch (Exception e) {
             log.error("调用失败，原因:" + e.getMessage());
         }
