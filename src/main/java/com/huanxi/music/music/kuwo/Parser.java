@@ -6,8 +6,10 @@ import lombok.extern.log4j.Log4j2;
 import okhttp3.OkHttpClient;
 import okhttp3.Response;
 import org.springframework.scheduling.annotation.Scheduled;
+import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
+import org.springframework.web.bind.annotation.PostMapping;
 
 import javax.annotation.PostConstruct;
 import javax.annotation.Resource;
@@ -27,9 +29,15 @@ public class Parser {
     @Resource
     OkHttp3Request okHttp3Request;
 
-    @Scheduled(fixedRate=1000*60*10)
-    public void init() {
+    @Scheduled(fixedRate = 1000 * 60 * 10)
+    public void fixed() throws InterruptedException {
         Response res = okHttp3Request.get("http://www.kuwo.cn");
-        res.close();
+        if (res != null) {
+            res.close();
+        } else {
+            Thread.sleep(2000);
+            this.fixed();
+        }
     }
+
 }

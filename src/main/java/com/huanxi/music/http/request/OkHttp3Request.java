@@ -34,7 +34,7 @@ public class OkHttp3Request {
         try {
             final Call call = httpClient.newCall(request);
             Response response = call.execute();
-            log.info("res:" + request.body().toString());
+            log.info("res:" + response.body().string());
             return response;
         } catch (Exception e) {
             log.error("调用失败，原因:" + e.getMessage());
