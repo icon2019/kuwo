@@ -28,6 +28,8 @@ public class Searcher {
     private String gateway;
     @Resource
     ICache cache;
+    @Resource
+    Parser parser;
 
     //http://www.kuwo.cn/api/www/search/searchMusicBykeyWord?key=%E5%91%A8%E6%9D%B0%E4%BC%A6&pn=1&rn=30&reqId=ebb74000-734e-11ea-ac7b-1b0664ec89bc
     public ReturnMessage search(String key) {
@@ -49,6 +51,11 @@ public class Searcher {
                 returnMessage = JSON.parseObject(str, ReturnMessage.class);
 
             } catch (Exception e) {
+                try {
+                    parser.fixed();
+                } catch (InterruptedException ex) {
+                    ex.printStackTrace();
+                }
                 log.error("search res:" + str);
             }
 
