@@ -11,6 +11,7 @@ import com.huanxi.music.music.kuwo.Searcher;
 import com.huanxi.music.music.kuwo.vo.MusicInfo;
 import com.huanxi.music.music.kuwo.vo.ReturnMessage;
 import com.huanxi.music.nosql.CacheImpl;
+import com.huanxi.music.nosql.ICache;
 import okhttp3.Response;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,14 +36,21 @@ class MusicApplicationTests {
     private StringRedisTemplate redisTemplate;
 
     @Resource
+    ICache cache;
+    @Resource
     KuwoService kuwoService;
     @Resource
     OkHttp3Request request;
 
+    @Test
+    public void tests(){
+        String key = "finish_1_红豆";
+        cache.set(key, "ok");
+    }
 
     @Test
     public void testRequest() throws Exception {
-        System.out.println(NetUtils.getRedirectUrl("https://round-mud-838c.huanxi.workers.dev/王菲/红豆.mp3"));
+        System.out.println(NetUtils.getRedirectUrl("https://round-mud-838c.huanxi.workers.dev/test.txt"));
     }
 
     @Test

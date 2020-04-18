@@ -23,6 +23,8 @@ public class KuwoService {
     @Resource
     OkHttp3Request okHttp3Request;
     @Resource
+    Parser parser;
+    @Resource
     ICache cache;
 
     public String getDownloadLinkCache(Long rid) {
@@ -57,7 +59,11 @@ public class KuwoService {
         try {
             a = JSON.parseObject(res.body().string(), GetLinkVo.class);
         } catch (IOException e) {
-            e.printStackTrace();
+            try {
+                parser.fixed();
+            } catch (InterruptedException ex) {
+                ex.printStackTrace();
+            }
         } finally {
             res.close();
         }
@@ -79,7 +85,16 @@ public class KuwoService {
         try {
             String str = res.body().string();
             if (!StringUtils.isEmpty(str)) {
-                vo = JSON.parseObject(str, SearchKeyVo.class);
+                try {
+                    vo = JSON.parseObject(str, SearchKeyVo.class);
+                } catch (Exception e) {
+                    try {
+                        parser.fixed();
+                    } catch (InterruptedException ex) {
+                        ex.printStackTrace();
+                    }
+                }
+
                 if (vo.getReqId() != null) {
                     cache.set(cacheKey, vo, Duration.ofHours(1));
                 }
