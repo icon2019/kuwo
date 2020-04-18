@@ -42,7 +42,7 @@ class MusicApplicationTests {
 
     @Test
     public void testRequest() throws Exception {
-        System.out.println(NetUtils.getRedirectUrl("http://test.tb.xqcrm.com:82/BTV北京卫视/周杰伦教郎朗弹钢琴1.mp3"));
+        System.out.println(NetUtils.getRedirectUrl("https://round-mud-838c.huanxi.workers.dev/王菲/红豆.mp3"));
     }
 
     @Test

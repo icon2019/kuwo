@@ -68,12 +68,14 @@ public class Music {
     @PostMapping("save")
     public AbstractMessage download(MusicInfo musicInfo) {
         String filename = musicPiP.save(musicInfo);
+//        String filename = "/Users/huangjiawei/IdeaProjects/music/data/music/周杰伦/告白气球.mp3";
+
         File file = new File(filename);
         if (file.isFile()) {
             return OutputUtils.success();
         } else {
             //获取onedrive链接
-            String requestUrl = String.format("http://test.tb.xqcrm.com:82/%s/%s.mp3", musicInfo.getArtist(), musicInfo.getName());
+            String requestUrl = String.format("https://round-mud-838c.huanxi.workers.dev/%s/%s.mp3", musicInfo.getArtist(), musicInfo.getName());
             String url = null;
             try {
                 url = NetUtils.getRedirectUrl(requestUrl);
