@@ -50,7 +50,15 @@ class MusicApplicationTests {
 
     @Test
     public void testRequest() throws Exception {
-        System.out.println(NetUtils.getRedirectUrl("https://round-mud-838c.huanxi.workers.dev/test.txt"));
+        //System.out.println("test:"+NetUtils.getRedirectUrl("https://round-mud-838c.huanxi.workers.dev/test.txt"));
+                HttpURLConnection conn = (HttpURLConnection) new URL("http://round-mud-838c.huanxi.workers.dev/test.txt")
+                .openConnection();
+        conn.setInstanceFollowRedirects(false);
+        conn.setConnectTimeout(5000);
+	conn.setRequestProperty("User-Agent","Mozilla/5.0 (Macintosh; Intel Mac OS X 10_14_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/80.0.3987.163 Safari/537.36");
+        conn.getHeaderFields().forEach((k,v)->{
+            System.out.println("k:"+k+"v:"+v);
+        });
     }
 
     @Test

@@ -14,6 +14,7 @@ public class NetUtils {
         HttpURLConnection conn = (HttpURLConnection) new URL(path)
                 .openConnection();
         conn.setInstanceFollowRedirects(false);
+	conn.setRequestProperty("User-Agent","Mozilla/5.0 (Macintosh; Intel Mac OS X 10_14_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/80.0.3987.163 Safari/537.36");
         conn.setConnectTimeout(5000);
         return conn.getHeaderField("Location");
     }

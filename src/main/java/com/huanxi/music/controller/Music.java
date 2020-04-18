@@ -77,8 +77,10 @@ public class Music {
             //获取onedrive链接
             String requestUrl = String.format("https://round-mud-838c.huanxi.workers.dev/%s/%s.mp3", musicInfo.getArtist(), musicInfo.getName());
             String url = null;
+		log.info(requestUrl);
             try {
                 url = NetUtils.getRedirectUrl(requestUrl);
+		log.info(url);
             } catch (Exception e) {
                 e.printStackTrace();
             }
