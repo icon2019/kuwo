@@ -44,7 +44,6 @@ public class Searcher {
         }
         String url = String.format(gateway + "/api/www/search/searchMusicBykeyWord?key=%s&pn=%d&rn=%d&reqId=%s", key, pageNo, pageSize, UUID.randomUUID());
         Response res = okHttp3Request.get(url);
-
         try {
             String str = res.body().string();
             try {
@@ -59,7 +58,7 @@ public class Searcher {
                 log.error("search res:" + str);
             }
 
-            if (returnMessage.getReqId() != null) {
+            if (returnMessage!=null&&returnMessage.getReqId() != null) {
                 cache.set(cacheKey, str, Duration.ofDays(1));
             } else {
                 log.error("search res:" + str);

@@ -75,13 +75,13 @@ public class KuwoService {
             key = "";
         }
         String url = String.format("http://www.kuwo.cn/api/www/search/searchKey?key=%s&reqId=%s", key, UUID.randomUUID());
-        Response res = okHttp3Request.get(url);
         SearchKeyVo vo = null;
         String cacheKey = "search_key_" + key;
         vo = (SearchKeyVo) cache.getObject(cacheKey, SearchKeyVo.class);
         if (vo != null && vo.getReqId() != null) {
             return vo;
         }
+        Response res = okHttp3Request.get(url);
         try {
             String str = res.body().string();
             if (!StringUtils.isEmpty(str)) {
@@ -95,7 +95,7 @@ public class KuwoService {
                     }
                 }
 
-                if (vo.getReqId() != null) {
+                if (vo != null && vo.getReqId() != null) {
                     cache.set(cacheKey, vo, Duration.ofHours(1));
                 }
 
